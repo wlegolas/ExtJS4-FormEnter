@@ -41,6 +41,13 @@
  *			name: 'email',
  *			vtype:'email'
  *		}, {
+			xtype: 'datefield',
+			fieldLabel: 'Birth Date',
+			name: 'dob',
+			format: 'm/d/Y',
+			submitFormat: 'Y-m-d',
+			altFormats: 'mdY|m d Y'
+		}, {
  *			xtype: 'timefield',
  *			fieldLabel: 'Time',
  *			name: 'time',
@@ -76,9 +83,12 @@ Ext.define('Ext.ux.FormEnterPlugin', {
 	onFormElKeyUp: function(e, el)
 	{
 		if (e.getKey() === e.ENTER) {
-			var fields = this.form.getForm().getFields(),
+			var me     = this,
+				fields = me.form.getForm().getFields(),
 				index  = fields.findIndex('name', el.getAttribute('name')),
 				nField = null;
+			
+			me.onFieldLoseFocus(fields.getAt(index), e);
 			
 			do
 			{
@@ -86,6 +96,13 @@ Ext.define('Ext.ux.FormEnterPlugin', {
 			}
 			while (!this.focusIf(nField, true, true) && index < fields.length && index >= 0)
 		}
+	},
+	
+	onFieldLoseFocus: function(field, e) 
+	{
+		e.keyCode = Ext.EventObject.TAB;
+
+		field.fireEvent('specialkey', field, e);
 	},
 	
 	focusIf: function(field, select, delay)
