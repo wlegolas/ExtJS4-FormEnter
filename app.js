@@ -51,6 +51,13 @@ Ext.onReady(function(){
 			name: 'email',
 			vtype:'email'
 		}, {
+            xtype: 'datefield',
+            fieldLabel: 'Birth Date',
+            name: 'dob',
+            format: 'm/d/Y',
+            submitFormat: 'Y-m-d',
+            altFormats: 'mdY|m d Y'
+        }, {
 			xtype: 'timefield',
 			fieldLabel: 'Time',
 			name: 'time',
